@@ -1,8 +1,13 @@
 #include "bubble_sort.hpp"
+#include <vector>
 
 using namespace std;
 
-void bubbleSort(vector<int>& vetor, SortMetrics& metrics) {
+// Construtor - chama o construtor da classe pai
+BubbleSort::BubbleSort() : AlgoritmoOrdenacao("Bubble Sort") {
+}
+
+void BubbleSort::ordenar(vector<int>& vetor, Metricas& metricas) {
     size_t n = vetor.size();
     bool trocou;
 
@@ -10,10 +15,10 @@ void bubbleSort(vector<int>& vetor, SortMetrics& metrics) {
         trocou = false;
 
         for (size_t j = 0; j < n - i - 1; ++j) {
-            metrics.comparacoes++;
+            metricas.incrementarComparacoes();
             if (vetor[j] > vetor[j + 1]) {
                 swap(vetor[j], vetor[j + 1]);
-                metrics.trocas++;
+                metricas.incrementarTrocas();
                 trocou = true;
             }
         }

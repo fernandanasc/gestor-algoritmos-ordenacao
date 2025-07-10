@@ -1,11 +1,15 @@
 #ifndef MERGE_SORT_HPP
 #define MERGE_SORT_HPP
 
-#include <vector>
-#include "utils.hpp"
+#include "algoritmo_ordenacao.hpp"
 
-using namespace std;
+class MergeSort : public AlgoritmoOrdenacao {
+public:
+    // Construtor
+    MergeSort();
 
-void mergeSort(vector<int>& vetor, SortMetrics& metrics);
+    // Implementação do método virtual puro
+    void ordenar(vector<int>& vetor, Metricas& metricas) override;
+};
 
 #endif

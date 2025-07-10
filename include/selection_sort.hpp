@@ -1,11 +1,15 @@
 #ifndef SELECTION_SORT_HPP
 #define SELECTION_SORT_HPP
 
-#include <vector>
-#include "utils.hpp"
+#include "algoritmo_ordenacao.hpp"
 
-using namespace std;
+class SelectionSort : public AlgoritmoOrdenacao {
+public:
+    // Construtor
+    SelectionSort();
 
-void selectionSort(vector<int>& vetor, SortMetrics& metrics);
+    // Implementação do método virtual puro
+    void ordenar(vector<int>& vetor, Metricas& metricas) override;
+};
 
 #endif

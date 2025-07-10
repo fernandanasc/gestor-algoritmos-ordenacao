@@ -1,11 +1,16 @@
 #ifndef QUICK_SORT_HPP
 #define QUICK_SORT_HPP
 
-#include <vector>
-#include "utils.hpp"
+#include "algoritmo_ordenacao.hpp"
 
-using namespace std;
+class QuickSort : public AlgoritmoOrdenacao {
+public:
+    // Construtor
+    QuickSort();
 
-void quickSort(vector<int>& vetor, SortMetrics& metrics);
+    // Implementação do método virtual puro
+    void ordenar(vector<int>& vetor, Metricas& metricas) override;
+};
+
 
 #endif

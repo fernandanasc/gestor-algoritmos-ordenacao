@@ -1,11 +1,15 @@
 #ifndef BUBBLE_SORT_HPP
 #define BUBBLE_SORT_HPP
 
-#include <vector>
-#include "utils.hpp"
+#include "algoritmo_ordenacao.hpp"
 
-using namespace std;
-
-void bubbleSort(vector<int>& vetor, SortMetrics& metrics);
+class BubbleSort : public AlgoritmoOrdenacao {
+public:
+    // Construtor
+    BubbleSort();
+    
+    // Implementação do método virtual puro
+    void ordenar(vector<int>& vetor, Metricas& metricas) override;
+};
 
 #endif

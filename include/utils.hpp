@@ -15,9 +15,11 @@ using namespace std;
 enum class TipoVetor {
     ALEATORIO,
     QUASE_ORDENADO,
-    INVERSO
+    INVERSO,
+    MANUAL
 };
 
+// DEPRECATED: Use a classe Metricas para novos códigos
 struct SortMetrics {
     size_t comparacoes = 0;
     size_t trocas = 0;

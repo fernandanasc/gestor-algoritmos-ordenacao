@@ -1,35 +1,40 @@
 #include "quick_sort.hpp"
 
-using namespace std;
+// Construtor - chama o construtor da classe pai
+QuickSort::QuickSort() : AlgoritmoOrdenacao("Quick Sort") {
+}
 
-static int particionar(vector<int>& vetor, int inicio, int fim, SortMetrics& metrics) {
+// Função auxiliar para particionar
+int particionar(vector<int>& vetor, int inicio, int fim, Metricas& metricas) {
     int pivo = vetor[fim];
     int i = inicio - 1;
 
     for (int j = inicio; j < fim; ++j) {
-        metrics.comparacoes++;
+        metricas.incrementarComparacoes();
         if (vetor[j] < pivo) {
             i++;
             swap(vetor[i], vetor[j]);
-            metrics.trocas++;
+            metricas.incrementarTrocas();
         }
     }
 
     swap(vetor[i + 1], vetor[fim]);
-    metrics.trocas++;
+    metricas.incrementarTrocas();
     return i + 1;
 }
 
-static void quickSortRec(vector<int>& vetor, int inicio, int fim, SortMetrics& metrics) {
+// Função auxiliar recursiva
+void quickSortRec(vector<int>& vetor, int inicio, int fim, Metricas& metricas) {
     if (inicio < fim) {
-        int p = particionar(vetor, inicio, fim, metrics);
-        quickSortRec(vetor, inicio, p - 1, metrics);
-        quickSortRec(vetor, p + 1, fim, metrics);
+        int p = particionar(vetor, inicio, fim, metricas);
+        quickSortRec(vetor, inicio, p - 1, metricas);
+        quickSortRec(vetor, p + 1, fim, metricas);
     }
 }
 
-void quickSort(vector<int>& vetor, SortMetrics& metrics) {
+// Implementação do método da classe (público)
+void QuickSort::ordenar(vector<int>& vetor, Metricas& metricas) {
     if (!vetor.empty()) {
-        quickSortRec(vetor, 0, vetor.size() - 1, metrics);
+        quickSortRec(vetor, 0, vetor.size() - 1, metricas);
     }
 }

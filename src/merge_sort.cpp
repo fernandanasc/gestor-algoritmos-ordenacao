@@ -1,8 +1,11 @@
 #include "merge_sort.hpp"
 
-using namespace std;
+// Construtor - chama o construtor da classe pai
+MergeSort::MergeSort() : AlgoritmoOrdenacao("Merge Sort") {
+}
 
-static void mergeSort(vector<int>& vetor, int inicio, int meio, int fim, SortMetrics& metrics) {
+// Função auxiliar para fazer o merge (privada da implementação)
+void merge(vector<int>& vetor, int inicio, int meio, int fim, Metricas& metricas) {
     vector<int> esquerda(vetor.begin() + inicio, vetor.begin() + meio + 1);
     vector<int> direita(vetor.begin() + meio + 1, vetor.begin() + fim + 1);
 
@@ -10,39 +13,39 @@ static void mergeSort(vector<int>& vetor, int inicio, int meio, int fim, SortMet
     int k = inicio;
 
     while (i < esquerda.size() && j < direita.size()) {
-        metrics.comparacoes++;
+        metricas.incrementarComparacoes();
         if (esquerda[i] <= direita[j]) {
             vetor[k++] = esquerda[i++];
         } else {
             vetor[k++] = direita[j++];
         }
-        metrics.trocas++; // Conta toda escrita como uma troca
+        metricas.incrementarTrocas(); // Conta toda escrita como uma troca
     }
 
     while (i < esquerda.size()) {
         vetor[k++] = esquerda[i++];
-        metrics.trocas++;
-
+        metricas.incrementarTrocas();
     }
 
     while (j < direita.size()) {
         vetor[k++] = direita[j++];
-        metrics.trocas++;
-
+        metricas.incrementarTrocas();
     }
 }
 
-static void mergeSortRec(vector<int>& vetor, int inicio, int fim, SortMetrics& metrics) {
+// Função auxiliar recursiva
+void mergeSortRec(vector<int>& vetor, int inicio, int fim, Metricas& metricas) {
     if (inicio < fim) {
         int meio = inicio + (fim - inicio) / 2;
-        mergeSortRec(vetor, inicio, meio, metrics);
-        mergeSortRec(vetor, meio + 1, fim, metrics);
-        mergeSort(vetor, inicio, meio, fim, metrics);
+        mergeSortRec(vetor, inicio, meio, metricas);
+        mergeSortRec(vetor, meio + 1, fim, metricas);
+        merge(vetor, inicio, meio, fim, metricas);
     }
 }
 
-void mergeSort(vector<int>& vetor, SortMetrics& metrics) {
+// Implementação do método da classe (público)
+void MergeSort::ordenar(vector<int>& vetor, Metricas& metricas) {
     if (!vetor.empty()) {
-        mergeSortRec(vetor, 0, vetor.size() - 1, metrics);
+        mergeSortRec(vetor, 0, vetor.size() - 1, metricas);
     }
 }
