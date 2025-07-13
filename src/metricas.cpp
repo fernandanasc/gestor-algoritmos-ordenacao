@@ -44,7 +44,7 @@ double Metricas::getTempo() const {
 string Metricas::toString() const {
     ostringstream oss;
     oss << "Tempo: " << tempoExecucao << "ms, "
-        << "Comparações: " << comparacoes << ", "
+        << "Comparacoes: " << comparacoes << ", "
         << "Trocas: " << trocas;
     return oss.str();
 }

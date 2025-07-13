@@ -14,7 +14,7 @@ using namespace std;
 
 // Função para ler vetor manual (separado por espaços)
 vector<int> lerVetorManual() {
-    cout << "\nDigite os números separados por espaços: ";
+    cout << "\nDigite os numeros separados por espacos: ";
     string linha;
     cin.ignore();
     getline(cin, linha);
@@ -27,17 +27,17 @@ vector<int> lerVetorManual() {
         numeros.push_back(numero);
     }
     
-    cout << "✅ Vetor lido com " << numeros.size() << " elementos.\n";
+    cout << " Vetor lido com " << numeros.size() << " elementos.\n";
     return numeros;
 }
 
 // Função para escolher tipo de vetor automático
 TipoVetor escolherTipoVetor() {
     cout << "\nTipo de vetor:\n";
-    cout << "1 - Aleatório\n";
+    cout << "1 - Aleatorio\n";
     cout << "2 - Quase Ordenado\n";
     cout << "3 - Inverso (decrescente)\n";
-    cout << "Opção: ";
+    cout << "Opcao: ";
     
     int opcao;
     cin >> opcao;
@@ -47,7 +47,7 @@ TipoVetor escolherTipoVetor() {
         case 2: return TipoVetor::QUASE_ORDENADO;
         case 3: return TipoVetor::INVERSO;
         default:
-            cout << "Opção inválida. Usando Aleatório.\n";
+            cout << "Opcao invalida. Usando Aleatorio.\n";
             return TipoVetor::ALEATORIO;
     }
 }
@@ -60,7 +60,7 @@ void executarAlgoritmoEspecifico(Teste& teste) {
     cout << "3 - Selection Sort\n";
     cout << "4 - Merge Sort\n";
     cout << "5 - Quick Sort\n";
-    cout << "Opção: ";
+    cout << "Opcao: ";
     
     int opcao;
     cin >> opcao;
@@ -99,6 +99,7 @@ void executarAlgoritmoEspecifico(Teste& teste) {
     }
     
     teste.executarAlgoritmo(algoritmo);
+    cout << "\n Algoritmo executado com sucesso!\n";
 }
 
 // Função para executar todos os algoritmos
@@ -117,18 +118,18 @@ void executarTodosAlgoritmos(Teste& teste) {
 // Função para gerenciar histórico de testes
 void gerenciarHistorico(GestorTestes& gestorTestes) {
     if (!gestorTestes.temTestes()) {
-        cout << "\n❌ Nenhum teste foi executado ainda.\n";
+        cout << "\n Nenhum teste foi executado ainda.\n";
         return;
     }
     
     while (true) {
-        cout << "\n=== HISTÓRICO DE TESTES ===\n";
+        cout << "\n=== HISTORICO DE TESTES ===\n";
         cout << "1 - Listar todos os testes\n";
         cout << "2 - Ver detalhes de um teste\n";
-        cout << "3 - Editar nome/descrição de um teste\n";
+        cout << "3 - Editar nome do teste\n";
         cout << "4 - Remover um teste\n";
         cout << "0 - Voltar ao menu principal\n";
-        cout << "Opção: ";
+        cout << "Opcao: ";
         
         int opcao;
         cin >> opcao;
@@ -148,19 +149,17 @@ void gerenciarHistorico(GestorTestes& gestorTestes) {
             }
             case 3: {
                 int id;
-                string novoNome, novaDescricao;
+                string novoNome;
                 cout << "Digite o ID do teste: ";
                 cin >> id;
                 cout << "Novo nome: ";
                 cin.ignore();
                 getline(cin, novoNome);
-                cout << "Nova descrição (opcional): ";
-                getline(cin, novaDescricao);
                 
-                if (gestorTestes.editarTeste(id, novoNome, novaDescricao)) {
-                    cout << "✅ Teste atualizado com sucesso!\n";
+                if (gestorTestes.editarTeste(id, novoNome)) {
+                    cout << " Teste atualizado com sucesso!\n";
                 } else {
-                    cout << "❌ Teste não encontrado!\n";
+                    cout << " Teste nao encontrado!\n";
                 }
                 break;
             }
@@ -169,44 +168,44 @@ void gerenciarHistorico(GestorTestes& gestorTestes) {
                 cout << "Digite o ID do teste: ";
                 cin >> id;
                 if (gestorTestes.removerTeste(id)) {
-                    cout << "✅ Teste removido com sucesso!\n";
+                    cout << " Teste removido com sucesso!\n";
                 } else {
-                    cout << "❌ Teste não encontrado!\n";
+                    cout << " Teste nao encontrado!\n";
                 }
                 break;
             }
             default:
-                cout << "❌ Opção inválida!\n";
+                cout << " Opcao invalida!\n";
         }
     }
 }
 
 int main() {
-    cout << "🚀 Sistema Indicador de Algoritmos de Ordenação\n";
+    cout << " Sistema Indicador de Algoritmos de Ordenacao\n";
     cout << "================================================\n";
     
     GestorTestes gestorTestes;
     
     while (true) {
         cout << "\n=== MENU PRINCIPAL ===\n";
-        cout << "1 - Nova análise de ordenação\n";
-        cout << "2 - Consultar histórico de testes\n";
+        cout << "1 - Nova analise de ordenacao\n";
+        cout << "2 - Consultar historico de testes\n";
         cout << "0 - Sair do programa\n";
-        cout << "Opção: ";
+        cout << "Opcao: ";
         
         int opcaoMenu;
         cin >> opcaoMenu;
         
         if (opcaoMenu == 0) {
-            cout << "\n👋 Encerrando programa. Obrigado!\n";
+            cout << "\n Encerrando programa. Obrigada!\n";
             break;
         }
         else if (opcaoMenu == 1) {
             // === ETAPA 1: ENTRADA DE DADOS ===
             cout << "\n=== ENTRADA DE DADOS ===\n";
             cout << "1 - Inserir vetor manualmente\n";
-            cout << "2 - Gerar vetor automático\n";
-            cout << "Opção: ";
+            cout << "2 - Gerar vetor automatico\n";
+            cout << "Opcao: ";
             
             int opcaoEntrada;
             cin >> opcaoEntrada;
@@ -226,7 +225,7 @@ int main() {
                 vetor = Vetor(tamanho, tipo);
             } 
             else {
-                cout << "❌ Opção inválida!\n";
+                cout << " Opcao invalida!\n";
                 continue;
             }
             
@@ -234,18 +233,22 @@ int main() {
             cout << "\n=== ESCOLHA DE ALGORITMO ===\n";
             cout << "1 - Executar apenas um algoritmo\n";
             cout << "2 - Executar todos os algoritmos\n";
-            cout << "Opção: ";
+            cout << "Opcao: ";
             
             int opcaoAlgoritmo;
             cin >> opcaoAlgoritmo;
             
-            // Criar teste
-            string nomeTeste = "Análise - " + vetor.getTipoString() + " (" + to_string(vetor.getTamanho()) + " elementos)";
-            int idTeste = gestorTestes.criarTeste(nomeTeste, vetor);
+            // Criar teste com nome sequencial
+            int idTeste = gestorTestes.criarTeste("temp", vetor); // Cria com nome temporário
+            string nomeTeste = "Teste " + to_string(idTeste);
+            
             Teste* teste = gestorTestes.buscarPorId(idTeste);
+            if (teste != nullptr) {
+                teste->setNome(nomeTeste); // Atualiza com o nome correto
+            }
             
             if (teste == nullptr) {
-                cout << "❌ Erro ao criar teste!\n";
+                cout << " Erro ao criar teste!\n";
                 continue;
             }
             
@@ -257,19 +260,19 @@ int main() {
                 executarTodosAlgoritmos(*teste);
             } 
             else {
-                cout << "❌ Opção inválida!\n";
+                cout << " Opcao invalida!\n";
                 continue;
             }
             
             // === ETAPA 4: RESULTADO SALVO ===
-            cout << "\n✅ Análise concluída e salva no histórico (ID: " << idTeste << ")!\n";
+            cout << "\n Analise concluida e salva no historico (ID: " << idTeste << ")!\n";
             
         }
         else if (opcaoMenu == 2) {
             gerenciarHistorico(gestorTestes);
         }
         else {
-            cout << "❌ Opção inválida!\n";
+            cout << " Opcao invalida!\n";
         }
     }
     

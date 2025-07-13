@@ -42,16 +42,16 @@ double ResultadoTeste::getEficiencia() const {
 
 string ResultadoTeste::toString() const {
     if (!executado) {
-        return nomeAlgoritmo + ": [Não executado]";
+        return nomeAlgoritmo + ": [Nao executado]";
     }
     
     stringstream ss;
-    ss << fixed << setprecision(4);
+    ss << fixed << setprecision(3);
     
-    ss << nomeAlgoritmo << ":\n";
-    ss << "  Tempo: " << metricas.getTempo() << " ms\n";
-    ss << "  Comparações: " << metricas.getComparacoes() << "\n";
-    ss << "  Trocas: " << metricas.getTrocas();
+    ss << "=== " << nomeAlgoritmo << " ===\n";
+    ss << "Tempo: " << metricas.getTempo() << " ms\n";
+    ss << "Comparacoes: " << metricas.getComparacoes() << "\n";
+    ss << "Trocas: " << metricas.getTrocas();
     
     return ss.str();
 }
@@ -63,8 +63,28 @@ bool ResultadoTeste::operator<(const ResultadoTeste& outro) const {
         return false; // Não pode comparar
     }
     
-    // Menor tempo = melhor (mais eficiente)
-    return this->metricas.getTempo() < outro.metricas.getTempo();
+    // 1º critério: Tempo (mais importante)
+    double tempoThis = this->metricas.getTempo();
+    double tempoOutro = outro.metricas.getTempo();
+    
+    // Se a diferença de tempo for significativa (mais de 1ms), usa o tempo
+    if (abs(tempoThis - tempoOutro) > 1.0) {
+        return tempoThis < tempoOutro; // Menor tempo = melhor
+    }
+    
+    // 2º critério: Se tempos são parecidos, compara trocas
+    size_t trocasThis = this->metricas.getTrocas();
+    size_t trocasOutro = outro.metricas.getTrocas();
+    
+    if (trocasThis != trocasOutro) {
+        return trocasThis < trocasOutro; // Menos trocas = melhor
+    }
+    
+    // 3º critério: Se trocas são iguais, compara comparações
+    size_t compThis = this->metricas.getComparacoes();
+    size_t compOutro = outro.metricas.getComparacoes();
+    
+    return compThis < compOutro; // Menos comparações = melhor
 }
 
 bool ResultadoTeste::operator>(const ResultadoTeste& outro) const {
@@ -76,7 +96,11 @@ bool ResultadoTeste::operator==(const ResultadoTeste& outro) const {
         return false; // Não pode comparar
     }
     
-    // Tempos muito próximos = iguais
+    // Tempos muito próximos, trocas iguais e comparações iguais = iguais
     double diferenca = abs(this->metricas.getTempo() - outro.metricas.getTempo());
-    return diferenca < 0.0001; // Diferença menor que 0.0001ms = iguais
+    bool tempoPertinho = diferenca < 1.0; // Diferença menor que 1ms
+    bool trocasIguais = this->metricas.getTrocas() == outro.metricas.getTrocas();
+    bool compIguais = this->metricas.getComparacoes() == outro.metricas.getComparacoes();
+    
+    return tempoPertinho && trocasIguais && compIguais;
 }

@@ -3,6 +3,7 @@
         "vector": "cpp",
         "xstring": "cpp",
         "cstdlib": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "sstream": "cpp"
     }
 }

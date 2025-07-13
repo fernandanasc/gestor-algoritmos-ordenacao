@@ -6,16 +6,9 @@
 #include <chrono>
 #include <iostream>
 
-// Construtor simples
+// Construtor
 Teste::Teste(int id, const string& nome, const Vetor& v) 
-    : id(id), nome(nome), vetor(v), concluido(false) {
-    // descrição fica vazia
-    inicializarDataHora();
-}
-
-// Construtor com descrição
-Teste::Teste(int id, const string& nome, const Vetor& v, const string& desc)
-    : id(id), nome(nome), descricao(desc), vetor(v), concluido(false) {
+    : id(id), nome(nome), vetor(v) {
     inicializarDataHora();
 }
 
@@ -31,7 +24,7 @@ void Teste::executarAlgoritmo(AlgoritmoOrdenacao* algo) {
     // Aviso para vetores grandes 
     size_t tamanho = vetor.getTamanho();
     if (tamanho >= 50000) {
-        cout << "\n⚠️  AVISO: Vetor grande (" << tamanho << " elementos). Aguarde...\n";
+        cout << "\n AVISO: Vetor grande (" << tamanho << " elementos). Aguarde...\n";
     }
     
     // Cria uma cópia do vetor para não alterar o original
@@ -49,23 +42,19 @@ void Teste::executarAlgoritmo(AlgoritmoOrdenacao* algo) {
     double tempo = chrono::duration<double, milli>(fim - inicio).count();
     metricas.setTempo(tempo);
     
-    // Exibe resultado individual
-    cout << "=== " << algo->getNome() << " ===" << endl;
-    cout << fixed << setprecision(3);
-    cout << "Tempo: " << tempo << " ms" << endl;
-    cout << "Comparações: " << metricas.getComparacoes() << endl;
-    cout << "Trocas: " << metricas.getTrocas() << endl << endl;
-    
     // Cria e adiciona o resultado
     ResultadoTeste resultado(algo->getNome());
     resultado.setMetricas(metricas);
+    
+    // Exibe resultado usando o método toString() do ResultadoTeste
+    cout << "\n" << resultado.toString() << "\n";
     
     adicionarResultado(resultado);
 }
 
 void Teste::executarTodosAlgoritmos(const vector<AlgoritmoOrdenacao*>& algos) {
     if (algos.empty()) {
-        throw ExcecaoTeste("Lista de algoritmos está vazia");
+        throw ExcecaoTeste("Lista de algoritmos esta vazia");
     }
     
     size_t tamanho = vetor.getTamanho();
@@ -75,9 +64,11 @@ void Teste::executarTodosAlgoritmos(const vector<AlgoritmoOrdenacao*>& algos) {
     cout << "Tipo de vetor: " << vetor.getTipoString() << "\n";
     cout << "Tamanho: " << tamanho << " elementos\n";
     
-    if (tamanho <= 100) {
+    if (tamanho <= 100 && vetor.getTipo() != TipoVetor::ALEATORIO) {
         cout << "\nVetor original:\n";
         vetor.imprimir();
+    } else if (vetor.getTipo() == TipoVetor::ALEATORIO) {
+        cout << "\n(Vetor aleatório não exibido)\n";
     } else {
         cout << "\n(Vetor original não exibido: tamanho excede 100 elementos)\n";
     }
@@ -99,8 +90,6 @@ void Teste::executarTodosAlgoritmos(const vector<AlgoritmoOrdenacao*>& algos) {
             cout << "\nNenhum algoritmo executado com sucesso.\n";
         }
     }
-    
-    marcarComoConcluido();
 }
 
 void Teste::adicionarResultado(const ResultadoTeste& resultado) {
@@ -156,20 +145,12 @@ string Teste::getNome() const {
     return nome;
 }
 
-string Teste::getDescricao() const {
-    return descricao;
-}
-
 Vetor Teste::getVetor() const {
     return vetor;
 }
 
 string Teste::getDataHoraExecucao() const {
     return dataHoraExecucao;
-}
-
-bool Teste::estaConcluido() const {
-    return concluido;
 }
 
 size_t Teste::getQuantidadeAlgoritmos() const {
@@ -181,33 +162,46 @@ void Teste::setNome(const string& novoNome) {
     nome = novoNome;
 }
 
-void Teste::setDescricao(const string& novaDesc) {
-    descricao = novaDesc;
-}
-
 // Métodos de utilidade
 string Teste::getRelatorio() const {
     stringstream ss;
     
-    ss << "=== RELATÓRIO DO TESTE #" << id << " ===\n";
+    ss << "=== RELATORIO DO TESTE #" << id << " ===\n";
     ss << "Nome: " << nome << "\n";
-    if (!descricao.empty()) {
-        ss << "Descrição: " << descricao << "\n";
-    }
-    ss << "Vetor: " << vetor.getTipoString() << " (" << vetor.getTamanho() << " elementos)\n";
-    ss << "Status: " << (concluido ? "Concluído" : "Em andamento") << "\n\n";
+    ss << "Vetor: " << vetor.getTipoString() << " (" << vetor.getTamanho() << " elementos)\n\n";
     
     if (resultados.empty()) {
         ss << "Nenhum algoritmo foi executado.\n";
         return ss.str();
     }
     
-    // Mostra apenas o melhor resultado
+    // Mostra todos os resultados ordenados do melhor para o pior
     auto ordenados = getResultadosOrdenados();
     if (!ordenados.empty()) {
-        ss << "🏆 MELHOR: " << ordenados[0].getNomeAlgoritmo() << "\n";
-        ss << "   Tempo: " << fixed << setprecision(3) << ordenados[0].getMetricas().getTempo() << " ms\n";
-        ss << "   Total executados: " << ordenados.size() << " algoritmos\n";
+        ss << "RESULTADOS (ordenados por desempenho):\n\n";
+        
+        for (size_t i = 0; i < ordenados.size(); ++i) {
+            const auto& resultado = ordenados[i];
+            
+            // Indicador de posição
+            if (i == 0) {
+                ss << "  MELHOR: ";
+            } else if (i == 1) {
+                ss << "  2 LUGAR: ";
+            } else if (i == 2) {
+                ss << "  3 LUGAR: ";
+            } else {
+                ss << " " << (i + 1) << " LUGAR: ";
+            }
+            
+            // Nome do algoritmo
+            ss << resultado.getNomeAlgoritmo() << "\n";
+            
+            // Métricas
+            ss << "    Tempo: " << fixed << setprecision(3) << resultado.getMetricas().getTempo() << " ms\n";
+            ss << "    Comparacoes: " << resultado.getMetricas().getComparacoes() << "\n";
+            ss << "    Trocas: " << resultado.getMetricas().getTrocas() << "\n\n";
+        }
     }
     
     return ss.str();
@@ -224,7 +218,7 @@ string Teste::getRelatorioResumido() const {
             ss << " - Melhor: " << melhor.getNomeAlgoritmo();
             ss << " (" << fixed << setprecision(2) << melhor.getMetricas().getTempo() << "ms)";
         } catch (const ExcecaoTeste&) {
-            ss << " - Sem resultados válidos";
+            ss << " - Sem resultados validos";
         }
     }
     
@@ -233,7 +227,6 @@ string Teste::getRelatorioResumido() const {
 
 void Teste::limparResultados() {
     resultados.clear();
-    concluido = false;
 }
 
 bool Teste::temResultados() const {
@@ -277,13 +270,9 @@ void Teste::inicializarDataHora() {
 
 void Teste::validarAlgoritmo(AlgoritmoOrdenacao* algo) {
     if (algo == nullptr) {
-        throw ExcecaoTeste("Algoritmo não pode ser nulo");
+        throw ExcecaoTeste("Algoritmo nao pode ser nulo");
     }
     if (!algo->isAtivo()) {
-        throw ExcecaoTeste("Algoritmo " + algo->getNome() + " está inativo");
+        throw ExcecaoTeste("Algoritmo " + algo->getNome() + " esta inativo");
     }
-}
-
-void Teste::marcarComoConcluido() {
-    concluido = true;
 }

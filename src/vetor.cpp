@@ -109,7 +109,7 @@ bool Vetor::estaVazio() const {
 // Métodos estáticos
 string Vetor::tipoParaString(TipoVetor tipo) {
     switch (tipo) {
-        case TipoVetor::ALEATORIO: return "Aleatório";
+        case TipoVetor::ALEATORIO: return "Aleatorio";
         case TipoVetor::QUASE_ORDENADO: return "Quase Ordenado";
         case TipoVetor::INVERSO: return "Inverso";
         case TipoVetor::MANUAL: return "Manual";
@@ -143,10 +143,10 @@ void Vetor::inicializarDataHora() {
 
 void Vetor::validarTamanho(size_t tam) {
     if (tam == 0) {
-        throw ExcecaoVetor("Tamanho do vetor não pode ser zero");
+        throw ExcecaoVetor("Tamanho do vetor nao pode ser zero");
     }
     if (tam > 1000000) { // Limite razoável
-        throw ExcecaoVetor("Tamanho do vetor muito grande (máximo: 1.000.000)");
+        throw ExcecaoVetor("Tamanho do vetor muito grande (maximo: 1.000.000)");
     }
 }
 

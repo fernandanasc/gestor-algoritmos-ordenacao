@@ -2,6 +2,7 @@
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
+#include <stdexcept>
 
 // Construtor
 GestorTestes::GestorTestes() : proximoId(1) {
@@ -12,12 +13,6 @@ GestorTestes::GestorTestes() : proximoId(1) {
 int GestorTestes::criarTeste(const string& nome, const Vetor& vetor) {
     int id = gerarProximoId();
     testes.emplace_back(id, nome, vetor);
-    return id;
-}
-
-int GestorTestes::criarTeste(const string& nome, const Vetor& vetor, const string& descricao) {
-    int id = gerarProximoId();
-    testes.emplace_back(id, nome, vetor, descricao);
     return id;
 }
 
@@ -32,13 +27,10 @@ Teste* GestorTestes::buscarPorId(int id) {
 }
 
 // CRUD - Update
-bool GestorTestes::editarTeste(int id, const string& novoNome, const string& novaDescricao) {
+bool GestorTestes::editarTeste(int id, const string& novoNome) {
     Teste* teste = buscarPorId(id);
     if (teste != nullptr) {
         teste->setNome(novoNome);
-        if (!novaDescricao.empty()) {
-            teste->setDescricao(novaDescricao);
-        }
         return true;
     }
     return false;
@@ -73,13 +65,34 @@ void GestorTestes::exibirLista() const {
     }
     
     cout << "\n=== LISTA DE TESTES ===\n";
+    cout << "ID | Nome                     | Vetor                | Resultado\n";
+    cout << "---|--------------------------|----------------------|-------------------------\n";
+    
     for (const auto& teste : testes) {
-        cout << "ID: " << teste.getId() 
-             << " | Nome: " << teste.getNome()
-             << " | Vetor: " << teste.getVetor().getTipoString() 
-             << " (" << teste.getVetor().getTamanho() << " elementos)"
-             << " | Status: " << (teste.estaConcluido() ? "Concluído" : "Pendente")
-             << "\n";
+        cout << setw(2) << teste.getId() << " | ";
+        cout << setw(24) << left << teste.getNome() << " | ";
+        cout << setw(20) << left << (teste.getVetor().getTipoString() + " (" + to_string(teste.getVetor().getTamanho()) + ")") << " | ";
+        
+        // Determinar o que mostrar na coluna Resultado
+        if (!teste.temResultados()) {
+            cout << "Nao executado";
+        } else {
+            auto resultados = teste.getResultados();
+            if (resultados.size() == 1) {
+                // Apenas um algoritmo executado
+                cout << "Executado: " << resultados[0].getNomeAlgoritmo();
+            } else {
+                // Múltiplos algoritmos - mostrar o melhor
+                try {
+                    auto melhor = teste.getMelhorResultado();
+                    cout << "Melhor: " << melhor.getNomeAlgoritmo() 
+                         << " (" << fixed << setprecision(2) << melhor.getMetricas().getTempo() << "ms)";
+                } catch (const exception&) {
+                    cout << "Erro na analise";
+                }
+            }
+        }
+        cout << "\n";
     }
 }
 
@@ -94,7 +107,7 @@ void GestorTestes::exibirDetalhes(int id) const {
     }
     
     if (teste == nullptr) {
-        cout << "\nTeste com ID " << id << " não encontrado.\n";
+        cout << "\nTeste com ID " << id << " nao encontrado.\n";
         return;
     }
     

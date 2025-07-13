@@ -18,13 +18,12 @@ public:
 
     // CRUD - Create
     int criarTeste(const string& nome, const Vetor& vetor);
-    int criarTeste(const string& nome, const Vetor& vetor, const string& descricao);
 
     // CRUD - Read
     Teste* buscarPorId(int id);
 
     // CRUD - Update
-    bool editarTeste(int id, const string& novoNome, const string& novaDescricao = "");
+    bool editarTeste(int id, const string& novoNome);
 
     // CRUD - Delete
     bool removerTeste(int id);
