@@ -91,6 +91,9 @@ direction TB
     Teste "*" -- "*" AlgoritmoOrdenacao
 ```
 
+## Código para Copiar e Colar
+
+```mermaid
 classDiagram
 direction TB
     class AlgoritmoOrdenacao {
@@ -175,9 +178,9 @@ direction TB
     Teste "1" -- "*" ResultadoTeste
     GestorTestes "1" -- "*" Teste
     Teste "*" -- "*" AlgoritmoOrdenacao
+```
 
-
-###  **Classes Implementadas (8+ classes)** ✅
+### 📊 **Classes Implementadas (8+ classes)** ✅
 1. `AlgoritmoOrdenacao` (classe abstrata)
 2. `BubbleSort`
 3. `InsertionSort` 
