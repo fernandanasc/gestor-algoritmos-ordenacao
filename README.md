@@ -38,7 +38,9 @@ Este projeto implementa um sistema interativo que permite:
 │   ├── teste.hpp                # Classe para gerenciar execuções
 │   └── gestor_testes.hpp        # Classe para CRUD de testes
 ├── 📁 src/              # Implementações (.cpp)
-├── 📄 main.cpp          # Interface principal
+├── � docs/             # Documentação técnica
+│   └── diagrama.md      # Diagrama UML (Mermaid)
+├── �📄 main.cpp          # Interface principal
 ├── 📄 Makefile         # Sistema de build
 └── 📄 README.md        # Este arquivo
 ```
