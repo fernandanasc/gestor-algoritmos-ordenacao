@@ -29,9 +29,6 @@ public:
     size_t getComparacoes() const;
     size_t getTrocas() const;
     double getTempo() const;
-    
-    // Método para exibir
-    string toString() const;
 };
 
 #endif

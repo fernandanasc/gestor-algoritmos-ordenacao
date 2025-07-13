@@ -38,8 +38,6 @@ private:
     vector<int> dados;
     size_t tamanho;
     TipoVetor tipo;
-    string dataHoraCriacao;
-    bool isManual;
 
 public:
     // Construtores
@@ -58,20 +56,14 @@ public:
     TipoVetor getTipo() const;
     string getTipoString() const; // Converte TipoVetor para string
     bool ehManual() const;
-    string getDataHoraCriacao() const;
 
     // Métodos de utilidade
     void imprimir() const;
     void validar(); // Valida se o vetor está correto
     bool estaVazio() const;
 
-    // Métodos estáticos de conveniência
-    static string tipoParaString(TipoVetor tipo);
-    static TipoVetor stringParaTipo(const string& str);
-
 private:
     // Métodos auxiliares privados
-    void inicializarDataHora();
     void validarTamanho(size_t tam);
     void gerarVetorAleatorio(size_t tam);
     void gerarVetorQuaseOrdenado(size_t tam);

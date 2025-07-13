@@ -9,7 +9,6 @@
 // Construtor
 Teste::Teste(int id, const string& nome, const Vetor& v) 
     : id(id), nome(nome), vetor(v) {
-    inicializarDataHora();
 }
 
 // Métodos para executar algoritmos
@@ -75,7 +74,7 @@ void Teste::executarTodosAlgoritmos(const vector<AlgoritmoOrdenacao*>& algos) {
     
     // Executa cada algoritmo
     for (AlgoritmoOrdenacao* algo : algos) {
-        if (algo != nullptr && algo->isAtivo() && !jaExecutou(algo->getNome())) {
+        if (algo != nullptr && !jaExecutou(algo->getNome())) {
             executarAlgoritmo(algo);
         }
     }
@@ -147,10 +146,6 @@ string Teste::getNome() const {
 
 Vetor Teste::getVetor() const {
     return vetor;
-}
-
-string Teste::getDataHoraExecucao() const {
-    return dataHoraExecucao;
 }
 
 size_t Teste::getQuantidadeAlgoritmos() const {
@@ -253,26 +248,8 @@ bool Teste::jaExecutou(const string& nomeAlgoritmo) const {
 }
 
 // Métodos auxiliares privados
-void Teste::inicializarDataHora() {
-    time_t now = time(0);
-    tm* ltm = localtime(&now);
-    
-    stringstream ss;
-    ss << setfill('0') << setw(2) << ltm->tm_mday << "/"
-       << setw(2) << (1 + ltm->tm_mon) << "/"
-       << (1900 + ltm->tm_year) << " "
-       << setw(2) << ltm->tm_hour << ":"
-       << setw(2) << ltm->tm_min << ":"
-       << setw(2) << ltm->tm_sec;
-    
-    dataHoraExecucao = ss.str();
-}
-
 void Teste::validarAlgoritmo(AlgoritmoOrdenacao* algo) {
     if (algo == nullptr) {
         throw ExcecaoTeste("Algoritmo nao pode ser nulo");
-    }
-    if (!algo->isAtivo()) {
-        throw ExcecaoTeste("Algoritmo " + algo->getNome() + " esta inativo");
     }
 }

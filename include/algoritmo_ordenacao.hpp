@@ -10,7 +10,6 @@ using namespace std;
 class AlgoritmoOrdenacao {
     private:
         string nome;
-        bool ativo;
 
     public:
         // Construtor que recebe o nome do algoritmo
@@ -22,12 +21,8 @@ class AlgoritmoOrdenacao {
         // Método virtual puro (classe abstrata)
         virtual void ordenar(vector<int>& vetor, Metricas& metricas) = 0;
 
-        // Métodos getters/setters
+        // Getter
         string getNome() const;
-
-        bool isAtivo() const;
-
-        void setAtivo(bool status);
 };
 
 #endif

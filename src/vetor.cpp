@@ -1,20 +1,17 @@
 #include "vetor.hpp"
 
 // Construtor padrão (vetor vazio)
-Vetor::Vetor() : tamanho(0), tipo(TipoVetor::MANUAL), isManual(true) {
-    inicializarDataHora();
+Vetor::Vetor() : tamanho(0), tipo(TipoVetor::MANUAL) {
 }
 
 // Construtor para vetor manual
 Vetor::Vetor(const vector<int>& dadosUsuario) : dados(dadosUsuario), tamanho(dadosUsuario.size()), 
-    tipo(TipoVetor::MANUAL), isManual(true) {
-    inicializarDataHora();
+    tipo(TipoVetor::MANUAL) {
     validar();
 }
 
 // Construtor para vetor automático
-Vetor::Vetor(size_t tam, TipoVetor t) : tamanho(tam), tipo(t), isManual(false) {
-    inicializarDataHora();
+Vetor::Vetor(size_t tam, TipoVetor t) : tamanho(tam), tipo(t) {
     gerar(tam, t);
 }
 
@@ -24,7 +21,6 @@ void Vetor::gerar(size_t tam, TipoVetor t) {
     
     tamanho = tam;
     tipo = t;
-    isManual = false;
     
     switch (t) {
         case TipoVetor::ALEATORIO:
@@ -46,7 +42,6 @@ void Vetor::setDadosManual(const vector<int>& dadosUsuario) {
     dados = dadosUsuario;
     tamanho = dadosUsuario.size();
     tipo = TipoVetor::MANUAL;
-    isManual = true;
     validar();
 }
 
@@ -68,15 +63,17 @@ TipoVetor Vetor::getTipo() const {
 }
 
 string Vetor::getTipoString() const {
-    return tipoParaString(tipo);
+    switch (tipo) {
+        case TipoVetor::ALEATORIO: return "Aleatorio";
+        case TipoVetor::QUASE_ORDENADO: return "Quase Ordenado";
+        case TipoVetor::INVERSO: return "Inverso";
+        case TipoVetor::MANUAL: return "Manual";
+        default: return "Desconhecido";
+    }
 }
 
 bool Vetor::ehManual() const {
-    return isManual;
-}
-
-string Vetor::getDataHoraCriacao() const {
-    return dataHoraCriacao;
+    return tipo == TipoVetor::MANUAL;
 }
 
 // Métodos de utilidade
@@ -106,41 +103,7 @@ bool Vetor::estaVazio() const {
     return dados.empty() || tamanho == 0;
 }
 
-// Métodos estáticos
-string Vetor::tipoParaString(TipoVetor tipo) {
-    switch (tipo) {
-        case TipoVetor::ALEATORIO: return "Aleatorio";
-        case TipoVetor::QUASE_ORDENADO: return "Quase Ordenado";
-        case TipoVetor::INVERSO: return "Inverso";
-        case TipoVetor::MANUAL: return "Manual";
-        default: return "Desconhecido";
-    }
-}
-
-TipoVetor Vetor::stringParaTipo(const string& str) {
-    if (str == "Aleatório" || str == "ALEATORIO") return TipoVetor::ALEATORIO;
-    if (str == "Quase Ordenado" || str == "QUASE_ORDENADO") return TipoVetor::QUASE_ORDENADO;
-    if (str == "Inverso" || str == "INVERSO") return TipoVetor::INVERSO;
-    if (str == "Manual" || str == "MANUAL") return TipoVetor::MANUAL;
-    throw ExcecaoVetor("Tipo de vetor desconhecido: " + str);
-}
-
 // Métodos privados auxiliares
-void Vetor::inicializarDataHora() {
-    time_t now = time(0);
-    tm* ltm = localtime(&now);
-    
-    stringstream ss;
-    ss << setfill('0') << setw(2) << ltm->tm_mday << "/"
-       << setw(2) << (1 + ltm->tm_mon) << "/"
-       << (1900 + ltm->tm_year) << " "
-       << setw(2) << ltm->tm_hour << ":"
-       << setw(2) << ltm->tm_min << ":"
-       << setw(2) << ltm->tm_sec;
-    
-    dataHoraCriacao = ss.str();
-}
-
 void Vetor::validarTamanho(size_t tam) {
     if (tam == 0) {
         throw ExcecaoVetor("Tamanho do vetor nao pode ser zero");

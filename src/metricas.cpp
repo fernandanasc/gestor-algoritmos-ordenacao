@@ -39,12 +39,3 @@ size_t Metricas::getTrocas() const {
 double Metricas::getTempo() const {
     return tempoExecucao;
 }
-
-// Converter para string
-string Metricas::toString() const {
-    ostringstream oss;
-    oss << "Tempo: " << tempoExecucao << "ms, "
-        << "Comparacoes: " << comparacoes << ", "
-        << "Trocas: " << trocas;
-    return oss.str();
-}

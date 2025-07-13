@@ -31,7 +31,6 @@ private:
     string nome;
     Vetor vetor;
     vector<ResultadoTeste> resultados;
-    string dataHoraExecucao;
 
 public:
     // Construtores
@@ -51,7 +50,6 @@ public:
     int getId() const;
     string getNome() const;
     Vetor getVetor() const;
-    string getDataHoraExecucao() const;
     size_t getQuantidadeAlgoritmos() const;
 
     // Setters
@@ -69,7 +67,6 @@ public:
 
 private:
     // Métodos auxiliares privados
-    void inicializarDataHora();
     void validarAlgoritmo(AlgoritmoOrdenacao* algo);
 };
 
