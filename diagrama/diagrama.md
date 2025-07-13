@@ -91,6 +91,91 @@ direction TB
     Teste "*" -- "*" AlgoritmoOrdenacao
 ```
 
+classDiagram
+direction TB
+    class AlgoritmoOrdenacao {
+        <<abstract>>
+        +ordenar(vetor, metricas)*
+        +getNome()
+    }
+
+    class BubbleSort {
+        +ordenar(vetor, metricas)
+    }
+
+    class InsertionSort {
+        +ordenar(vetor, metricas)
+    }
+
+    class SelectionSort {
+        +ordenar(vetor, metricas)
+    }
+
+    class MergeSort {
+        +ordenar(vetor, metricas)
+    }
+
+    class QuickSort {
+        +ordenar(vetor, metricas)
+    }
+
+    class Vetor {
+        -dados: vector~int~
+        -tipo: string
+        +criarManual()
+        +criarAutomatico()
+        +getDados()
+        +getTamanho()
+    }
+
+    class Metricas {
+        -comparacoes: int
+        -trocas: int
+        -tempo: double
+        +incrementarComparacoes()
+        +incrementarTrocas()
+        +getComparacoes()
+        +getTrocas()
+        +getTempo()
+    }
+
+    class ResultadoTeste {
+        -nomeAlgoritmo: string
+        -metricas: Metricas
+        +getNomeAlgoritmo()
+        +getMetricas()
+    }
+
+    class Teste {
+        -id: int
+        -nome: string
+        -vetor: Vetor
+        -resultados: vector~ResultadoTeste~
+        +executarAlgoritmo()
+        +getMelhorResultado()
+        +getRelatorio()
+    }
+
+    class GestorTestes {
+        -testes: vector~Teste~
+        +criarTeste()
+        +editarTeste()
+        +removerTeste()
+        +listarTestes()
+    }
+
+    AlgoritmoOrdenacao <|-- BubbleSort
+    AlgoritmoOrdenacao <|-- InsertionSort
+    AlgoritmoOrdenacao <|-- SelectionSort
+    AlgoritmoOrdenacao <|-- MergeSort
+    AlgoritmoOrdenacao <|-- QuickSort
+
+    Teste "1" -- "1" Vetor
+    ResultadoTeste "1" -- "1" Metricas
+    Teste "1" -- "*" ResultadoTeste
+    GestorTestes "1" -- "*" Teste
+    Teste "*" -- "*" AlgoritmoOrdenacao
+
 
 ###  **Classes Implementadas (8+ classes)** ✅
 1. `AlgoritmoOrdenacao` (classe abstrata)
