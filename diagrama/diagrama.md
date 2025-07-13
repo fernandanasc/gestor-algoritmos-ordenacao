@@ -93,7 +93,7 @@ direction TB
 
 ## Código para Copiar e Colar
 
-```mermaid
+```
 classDiagram
 direction TB
     class AlgoritmoOrdenacao {
