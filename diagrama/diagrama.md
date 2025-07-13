@@ -6,6 +6,7 @@ Copie e cole este código no site [mermaid.live](https://mermaid.live) para gera
 
 ```mermaid
 classDiagram
+direction TB
     class AlgoritmoOrdenacao {
         <<abstract>>
         +ordenar(vetor, metricas)*
@@ -77,32 +78,21 @@ classDiagram
         +listarTestes()
     }
 
-    %% HERANÇA - Algoritmos herdam de AlgoritmoOrdenacao
     AlgoritmoOrdenacao <|-- BubbleSort
     AlgoritmoOrdenacao <|-- InsertionSort
     AlgoritmoOrdenacao <|-- SelectionSort
     AlgoritmoOrdenacao <|-- MergeSort
     AlgoritmoOrdenacao <|-- QuickSort
 
-    %% RELACIONAMENTO 1:1 - Cada Teste tem exatamente 1 Vetor
-    Teste ||--|| Vetor : "tem 1"
-
-    %% RELACIONAMENTO 1:N - Um Teste tem muitos ResultadoTeste
-    Teste ||--o{ ResultadoTeste : "tem muitos"
-
-    %% RELACIONAMENTO 1:N - Um GestorTestes gerencia muitos Teste
-    GestorTestes ||--o{ Teste : "gerencia muitos"
-
-    %% RELACIONAMENTO 1:1 - Cada ResultadoTeste tem exatamente 1 Metricas
-    ResultadoTeste ||--|| Metricas : "tem 1"
-
-    %% RELACIONAMENTO N:M - Muitos Teste podem usar muitos AlgoritmoOrdenacao
-    Teste }o--o{ AlgoritmoOrdenacao : "executa/usado por"
+    Teste "1" -- "1" Vetor
+    ResultadoTeste "1" -- "1" Metricas
+    Teste "1" -- "*" ResultadoTeste
+    GestorTestes "1" -- "*" Teste
+    Teste "*" -- "*" AlgoritmoOrdenacao
 ```
 
-## Explicação dos Critérios do Trabalho
 
-### � **Classes Implementadas (8+ classes)** ✅
+###  **Classes Implementadas (8+ classes)** ✅
 1. `AlgoritmoOrdenacao` (classe abstrata)
 2. `BubbleSort`
 3. `InsertionSort` 
@@ -118,15 +108,15 @@ classDiagram
 ### 🔗 **Relacionamentos Obrigatórios** ✅
 
 #### **1:1 (Um para Um)**
-- `Teste ||--|| Vetor` - Cada teste tem **exatamente 1** vetor
-- `ResultadoTeste ||--|| Metricas` - Cada resultado tem **exatamente 1** métrica
+- `Teste "1" -- "1" Vetor` - Cada teste tem **exatamente 1** vetor
+- `ResultadoTeste "1" -- "1" Metricas` - Cada resultado tem **exatamente 1** métrica
 
 #### **1:N (Um para Muitos)**
-- `Teste ||--o{ ResultadoTeste` - Um teste tem **muitos** resultados
-- `GestorTestes ||--o{ Teste` - Um gestor gerencia **muitos** testes
+- `Teste "1" -- "*" ResultadoTeste` - Um teste tem **muitos** resultados
+- `GestorTestes "1" -- "*" Teste` - Um gestor gerencia **muitos** testes
 
 #### **N:M (Muitos para Muitos)**
-- `Teste }o--o{ AlgoritmoOrdenacao` - Muitos testes podem usar muitos algoritmos
+- `Teste "*" -- "*" AlgoritmoOrdenacao` - Muitos testes podem usar muitos algoritmos
 
 ### 🏗️ **Conceitos de POO** ✅
 
@@ -149,9 +139,9 @@ classDiagram
 - **Delete**: `removerTeste()`
 
 ### 🎯 **Legenda dos Relacionamentos:**
-- `||--||` = **1:1** (um para um)
-- `||--o{` = **1:N** (um para muitos)
-- `}o--o{` = **N:M** (muitos para muitos)
+- `"1" -- "1"` = **1:1** (um para um)
+- `"1" -- "*"` = **1:N** (um para muitos)
+- `"*" -- "*"` = **N:M** (muitos para muitos)
 - `<|--` = **Herança** (é um)
 
 ### 🎯 **Como Usar:**
@@ -160,12 +150,7 @@ classDiagram
 3. O diagrama será gerado automaticamente
 4. Clique em "Export" para salvar como imagem
 
-### 📝 **Para Apresentação:**
-- **Explique a herança**: Todos os algoritmos seguem o mesmo padrão
-- **Mostre a composição**: Como as classes se relacionam
-- **Destaque a flexibilidade**: Fácil adicionar novos algoritmos
 
 ---
 
-*Diagrama simplificado para apresentação acadêmica*  
 *Desenvolvido por: Fernanda Nascimento*
