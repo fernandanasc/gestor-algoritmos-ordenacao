@@ -49,9 +49,7 @@ bool GestorTestes::removerTeste(int id) {
 }
 
 // Métodos de análise
-size_t GestorTestes::getTotalTestes() const {
-    return testes.size();
-}
+
 
 bool GestorTestes::temTestes() const {
     return !testes.empty();

@@ -9,55 +9,81 @@ classDiagram
 direction TB
     class AlgoritmoOrdenacao {
         <<abstract>>
+        -nome: string
+        +AlgoritmoOrdenacao(nome)
+        +~AlgoritmoOrdenacao()
         +ordenar(vetor, metricas)*
         +getNome()
     }
 
     class BubbleSort {
+        +BubbleSort()
         +ordenar(vetor, metricas)
     }
 
     class InsertionSort {
+        +InsertionSort()
         +ordenar(vetor, metricas)
     }
 
     class SelectionSort {
+        +SelectionSort()
         +ordenar(vetor, metricas)
     }
 
     class MergeSort {
+        +MergeSort()
         +ordenar(vetor, metricas)
     }
 
     class QuickSort {
+        +QuickSort()
         +ordenar(vetor, metricas)
     }
 
     class Vetor {
         -dados: vector~int~
-        -tipo: string
-        +criarManual()
-        +criarAutomatico()
+        -tamanho: size_t
+        -tipo: TipoVetor
+        +Vetor()
+        +Vetor(dados)
+        +Vetor(tam, tipo)
+        +gerar(tam, tipo)
+        +setDadosManual(dados)
         +getDados()
+        +getCopia()
         +getTamanho()
+        +getTipo()
+        +getTipoString()
+        +imprimir()
+        +validar()
     }
 
     class Metricas {
-        -comparacoes: int
-        -trocas: int
-        -tempo: double
+        -comparacoes: size_t
+        -trocas: size_t
+        -tempoExecucao: double
+        +Metricas()
+        +reset()
         +incrementarComparacoes()
         +incrementarTrocas()
+        +setTempoExecucao(tempo)
         +getComparacoes()
         +getTrocas()
-        +getTempo()
+        +getTempoExecucao()
     }
 
     class ResultadoTeste {
         -nomeAlgoritmo: string
         -metricas: Metricas
+        -executado: bool
+        +ResultadoTeste(nome)
+        +setMetricas(metricas)
+        +marcarExecutado()
         +getNomeAlgoritmo()
         +getMetricas()
+        +foiExecutado()
+        +getEficiencia()
     }
 
     class Teste {
@@ -65,17 +91,31 @@ direction TB
         -nome: string
         -vetor: Vetor
         -resultados: vector~ResultadoTeste~
-        +executarAlgoritmo()
+        +Teste(id, nome, vetor)
+        +executarAlgoritmo(algo)
+        +executarTodosAlgoritmos(algos)
+        +adicionarResultado(resultado)
         +getMelhorResultado()
+        +getResultados()
+        +getId()
+        +getNome()
+        +setNome(nome)
+        +getVetor()
         +getRelatorio()
     }
 
     class GestorTestes {
         -testes: vector~Teste~
-        +criarTeste()
-        +editarTeste()
-        +removerTeste()
-        +listarTestes()
+        -proximoId: int
+        +GestorTestes()
+        +criarTeste(nome, vetor)
+        +buscarPorId(id)
+        +editarTeste(id, nome)
+        +removerTeste(id)
+        +getTotalTestes()
+        +temTestes()
+        +exibirLista()
+        +exibirDetalhes(id)
     }
 
     AlgoritmoOrdenacao <|-- BubbleSort
@@ -98,55 +138,81 @@ classDiagram
 direction TB
     class AlgoritmoOrdenacao {
         <<abstract>>
+        -nome: string
+        +AlgoritmoOrdenacao(nome)
+        +~AlgoritmoOrdenacao()
         +ordenar(vetor, metricas)*
         +getNome()
     }
 
     class BubbleSort {
+        +BubbleSort()
         +ordenar(vetor, metricas)
     }
 
     class InsertionSort {
+        +InsertionSort()
         +ordenar(vetor, metricas)
     }
 
     class SelectionSort {
+        +SelectionSort()
         +ordenar(vetor, metricas)
     }
 
     class MergeSort {
+        +MergeSort()
         +ordenar(vetor, metricas)
     }
 
     class QuickSort {
+        +QuickSort()
         +ordenar(vetor, metricas)
     }
 
     class Vetor {
         -dados: vector~int~
-        -tipo: string
-        +criarManual()
-        +criarAutomatico()
+        -tamanho: size_t
+        -tipo: TipoVetor
+        +Vetor()
+        +Vetor(dados)
+        +Vetor(tam, tipo)
+        +gerar(tam, tipo)
+        +setDadosManual(dados)
         +getDados()
+        +getCopia()
         +getTamanho()
+        +getTipo()
+        +getTipoString()
+        +imprimir()
+        +validar()
     }
 
     class Metricas {
-        -comparacoes: int
-        -trocas: int
-        -tempo: double
+        -comparacoes: size_t
+        -trocas: size_t
+        -tempoExecucao: double
+        +Metricas()
+        +reset()
         +incrementarComparacoes()
         +incrementarTrocas()
+        +setTempoExecucao(tempo)
         +getComparacoes()
         +getTrocas()
-        +getTempo()
+        +getTempoExecucao()
     }
 
     class ResultadoTeste {
         -nomeAlgoritmo: string
         -metricas: Metricas
+        -executado: bool
+        +ResultadoTeste(nome)
+        +setMetricas(metricas)
+        +marcarExecutado()
         +getNomeAlgoritmo()
         +getMetricas()
+        +foiExecutado()
+        +getEficiencia()
     }
 
     class Teste {
@@ -154,17 +220,31 @@ direction TB
         -nome: string
         -vetor: Vetor
         -resultados: vector~ResultadoTeste~
-        +executarAlgoritmo()
+        +Teste(id, nome, vetor)
+        +executarAlgoritmo(algo)
+        +executarTodosAlgoritmos(algos)
+        +adicionarResultado(resultado)
         +getMelhorResultado()
+        +getResultados()
+        +getId()
+        +getNome()
+        +setNome(nome)
+        +getVetor()
         +getRelatorio()
     }
 
     class GestorTestes {
         -testes: vector~Teste~
-        +criarTeste()
-        +editarTeste()
-        +removerTeste()
-        +listarTestes()
+        -proximoId: int
+        +GestorTestes()
+        +criarTeste(nome, vetor)
+        +buscarPorId(id)
+        +editarTeste(id, nome)
+        +removerTeste(id)
+        +getTotalTestes()
+        +temTestes()
+        +exibirLista()
+        +exibirDetalhes(id)
     }
 
     AlgoritmoOrdenacao <|-- BubbleSort

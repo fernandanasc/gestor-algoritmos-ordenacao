@@ -15,9 +15,6 @@ public:
     // Construtor
     Metricas();
     
-    // Métodos para resetar
-    void reset();
-    
     // Métodos para incrementar
     void incrementarComparacoes();
     void incrementarTrocas();

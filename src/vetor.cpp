@@ -72,9 +72,7 @@ string Vetor::getTipoString() const {
     }
 }
 
-bool Vetor::ehManual() const {
-    return tipo == TipoVetor::MANUAL;
-}
+
 
 // Métodos de utilidade
 void Vetor::imprimir() const {

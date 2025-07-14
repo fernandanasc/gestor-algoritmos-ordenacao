@@ -6,11 +6,7 @@ Metricas::Metricas() : comparacoes(0), trocas(0), tempoExecucao(0.0) {
 }
 
 // Reset dos contadores
-void Metricas::reset() {
-    comparacoes = 0;
-    trocas = 0;
-    tempoExecucao = 0.0;
-}
+
 
 // Incrementar comparações
 void Metricas::incrementarComparacoes() {

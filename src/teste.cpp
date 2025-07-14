@@ -148,9 +148,7 @@ Vetor Teste::getVetor() const {
     return vetor;
 }
 
-size_t Teste::getQuantidadeAlgoritmos() const {
-    return resultados.size();
-}
+
 
 // Setters
 void Teste::setNome(const string& novoNome) {
@@ -202,27 +200,9 @@ string Teste::getRelatorio() const {
     return ss.str();
 }
 
-string Teste::getRelatorioResumido() const {
-    stringstream ss;
-    ss << "Teste #" << id << " - " << nome;
-    ss << " (" << vetor.getTipoString() << ", " << vetor.getTamanho() << " elementos)";
-    
-    if (!resultados.empty()) {
-        try {
-            auto melhor = getMelhorResultado();
-            ss << " - Melhor: " << melhor.getNomeAlgoritmo();
-            ss << " (" << fixed << setprecision(2) << melhor.getMetricas().getTempo() << "ms)";
-        } catch (const ExcecaoTeste&) {
-            ss << " - Sem resultados validos";
-        }
-    }
-    
-    return ss.str();
-}
 
-void Teste::limparResultados() {
-    resultados.clear();
-}
+
+
 
 bool Teste::temResultados() const {
     return !resultados.empty();

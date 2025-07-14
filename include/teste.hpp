@@ -50,15 +50,12 @@ public:
     int getId() const;
     string getNome() const;
     Vetor getVetor() const;
-    size_t getQuantidadeAlgoritmos() const;
 
     // Setters
     void setNome(const string& novoNome);
 
     // Métodos de utilidade
     string getRelatorio() const;
-    string getRelatorioResumido() const;
-    void limparResultados();
     bool temResultados() const;
 
     // Métodos de busca

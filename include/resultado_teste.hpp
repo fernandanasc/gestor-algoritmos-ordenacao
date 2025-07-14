@@ -26,13 +26,10 @@ public:
     bool foiExecutado() const;
 
     //Métodos de análise
-    double getEficiencia() const; // Baseado no tempo (menor = melhor)
     string toString() const; // Para exibição formatada
 
     // Operadores para comparação (tempo primeiro, depois trocas, depois comparações)
     bool operator<(const ResultadoTeste& outro) const; // Para encontrar o melhor
-    bool operator>(const ResultadoTeste& outro) const;
-    bool operator==(const ResultadoTeste& outro) const;
 
 };
 

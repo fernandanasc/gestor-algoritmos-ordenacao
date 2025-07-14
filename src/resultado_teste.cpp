@@ -33,12 +33,6 @@ bool ResultadoTeste::foiExecutado() const {
 }
 
 // Métodos de análise
-double ResultadoTeste::getEficiencia() const {
-    if (!executado) {
-        return -1.0; // Valor inválido para não executado
-    }
-    return metricas.getTempo(); // Menor tempo = mais eficiente
-}
 
 string ResultadoTeste::toString() const {
     if (!executado) {
@@ -85,22 +79,4 @@ bool ResultadoTeste::operator<(const ResultadoTeste& outro) const {
     size_t compOutro = outro.metricas.getComparacoes();
     
     return compThis < compOutro; // Menos comparações = melhor
-}
-
-bool ResultadoTeste::operator>(const ResultadoTeste& outro) const {
-    return outro < *this; // Reutiliza o operador <
-}
-
-bool ResultadoTeste::operator==(const ResultadoTeste& outro) const {
-    if (!this->executado || !outro.executado) {
-        return false; // Não pode comparar
-    }
-    
-    // Tempos muito próximos, trocas iguais e comparações iguais = iguais
-    double diferenca = abs(this->metricas.getTempo() - outro.metricas.getTempo());
-    bool tempoPertinho = diferenca < 1.0; // Diferença menor que 1ms
-    bool trocasIguais = this->metricas.getTrocas() == outro.metricas.getTrocas();
-    bool compIguais = this->metricas.getComparacoes() == outro.metricas.getComparacoes();
-    
-    return tempoPertinho && trocasIguais && compIguais;
 }

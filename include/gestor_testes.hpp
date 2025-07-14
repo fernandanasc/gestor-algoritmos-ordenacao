@@ -29,7 +29,6 @@ public:
     bool removerTeste(int id);
 
     // Métodos de análise
-    size_t getTotalTestes() const;
     bool temTestes() const;
 
     // Métodos de utilidade

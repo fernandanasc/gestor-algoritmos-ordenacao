@@ -55,7 +55,6 @@ public:
     size_t getTamanho() const;
     TipoVetor getTipo() const;
     string getTipoString() const; // Converte TipoVetor para string
-    bool ehManual() const;
 
     // Métodos de utilidade
     void imprimir() const;
